@@ -5,10 +5,10 @@ spring:
     mapper:
       default-view-inclusion: true
   profiles:
-    active: release, metric
+    active: local, metric
 
 server:
-  port: 8080
+  port: 18080
   error:
     path: /api-public/error
     include-exception: true

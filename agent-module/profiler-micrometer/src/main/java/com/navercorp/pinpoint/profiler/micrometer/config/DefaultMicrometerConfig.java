@@ -3,7 +3,7 @@ package com.navercorp.pinpoint.profiler.micrometer.config;
 import com.navercorp.pinpoint.common.config.Value;
 
 public class DefaultMicrometerConfig implements MicrometerConfig {
-    @Value("${profiler.micrometer.otlp.enabled}")
+    // @Value("${profiler.micrometer.otlp.enabled}")
     private boolean enable = false;
 
     @Value("${profiler.micrometer.otlp.url}")
