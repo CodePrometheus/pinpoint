@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: release
+    active: local
 
 server:
   port: 8081
@@ -11,5 +11,9 @@ pinpoint:
       grpc:
         ssl:
           enabled: false
+      inspector:
+        enabled: false
+      metric:
+        enabled: false
     realtime:
       enabled: false
