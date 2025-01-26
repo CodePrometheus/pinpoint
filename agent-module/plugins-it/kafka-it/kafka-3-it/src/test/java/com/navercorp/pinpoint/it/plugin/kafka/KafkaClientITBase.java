@@ -112,6 +112,6 @@ public class KafkaClientITBase {
         ExpectedTrace messageArrivedExpected = event(KAFKA_CLIENT_INTERNAL_SERVICE_TYPE, consumeRecordsMethod);
 
         verifier.printCache();
-//        verifier.verifyDiscreteTrace(producerSendExpected, consumerEntryPointInvocationExpected, messageArrivedExpected);
+       verifier.verifyDiscreteTrace(producerSendExpected, consumerEntryPointInvocationExpected, messageArrivedExpected);
     }
 }

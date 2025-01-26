@@ -34,6 +34,7 @@ import com.navercorp.pinpoint.plugin.rocketmq.RocketMQConstants;
 import com.navercorp.pinpoint.plugin.rocketmq.field.accessor.EndPointFieldAccessor;
 import org.apache.rocketmq.common.protocol.header.SendMessageRequestHeader;
 
+import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,16 +54,20 @@ public class ProducerSendInterceptor implements AroundInterceptor {
 
     public ProducerSendInterceptor(MethodDescriptor methodDescriptor, TraceContext traceContext) {
         this.methodDescriptor = methodDescriptor;
+        System.out.println("my|rmq|traceContext = " + traceContext);
         this.traceContext = traceContext;
     }
 
     @Override
     public void before(Object target, Object[] args) {
+        System.out.println("my|rmq|ProducerSendInterceptor before begin, time = " + LocalTime.now());
+        System.out.println("my|rmq|this.traceContext = " + this.traceContext);
         if (isDebug) {
             logger.beforeInterceptor(target, args);
         }
         try {
             Trace trace = traceContext.currentTraceObject();
+            System.out.println("my|rmq|before|trace = " + trace);
             final AsyncContextAccessor sendCallback = getSendCallback(args);
             // async send process
             if (sendCallback != null) {
@@ -216,7 +221,9 @@ public class ProducerSendInterceptor implements AroundInterceptor {
 
     private boolean isSkipTrace() {
         final Trace trace = traceContext.currentRawTraceObject();
+        System.out.println("my|rmq|isSkipTrace|trace = " + trace);
         if (trace == null) {
+            System.out.println("my|rmq|isSkipTrace trace is null");
             return false;
         }
         if (hasScope(trace)) {

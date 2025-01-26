@@ -1,7 +1,7 @@
 namesrvAddr: localhost:9876
 
 server:
-  port: 18080
+  port: 8999
 
 logging:
   level:

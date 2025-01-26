@@ -58,6 +58,11 @@
             <artifactId>rocketmq-client</artifactId>
             <version>4.7.1</version>
         </dependency>
+        <dependency>
+            <groupId>javax.annotation</groupId>
+            <artifactId>javax.annotation-api</artifactId>
+            <scope>compile</scope>
+        </dependency>
     </dependencies>
 
     <build>

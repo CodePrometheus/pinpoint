@@ -39,6 +39,7 @@ public final class ProducerSendCallBackInterceptor {
         @Override
         protected void doInBeforeTrace(SpanEventRecorder recorder, Object target, Object[] args) {
             final AsyncContext asyncContext = recorder.recordNextAsyncContext();
+            System.out.println("my|rmq|ProducerSendCallBackInterceptor|doInBeforeTrace asyncContext = " + asyncContext);
             ((AsyncContextAccessor) target)._$PINPOINT$_setAsyncContext(asyncContext);
         }
 

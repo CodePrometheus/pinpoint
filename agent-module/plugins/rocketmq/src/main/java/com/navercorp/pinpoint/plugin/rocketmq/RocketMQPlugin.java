@@ -122,6 +122,7 @@ public class RocketMQPlugin implements ProfilerPlugin, MatchableTransformTemplat
                     MethodFilters.name("sendMessage"));
             for (InstrumentMethod sendMessageMethod : sendMessageMethods) {
                 if (sendMessageMethod.getParameterTypes().length == 12) {
+                    System.out.println("my|rmq|ProducerSendInterceptor begin");
                     sendMessageMethod.addInterceptor(ProducerSendInterceptor.class);
                 }
             }

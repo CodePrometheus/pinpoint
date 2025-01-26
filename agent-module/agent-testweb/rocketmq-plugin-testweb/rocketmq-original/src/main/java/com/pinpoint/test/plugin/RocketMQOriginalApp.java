@@ -23,6 +23,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @SpringBootApplication
 public class RocketMQOriginalApp {
+    /**
+     -javaagent:/Users/zhouzixin/agent-framework/pinpoint/agent-module/agent/target/pinpoint-agent-3.1.0-SNAPSHOT/pinpoint-bootstrap-3.1.0-SNAPSHOT.jar
+     -Dpinpoint.agentId=rocketmq-agentId
+     -Dpinpoint.applicationName=rocketmq-name
+     -Dpinpoint.profiler.profiles.active=local
+     -Dprofiler.rocketmq.producer.enable=true
+     -Dprofiler.rocketmq.consumer.enable=true
+     -Dprofiler.rocketmq.basePackage=com.pinpoint.test.plugin
+     */
     public static void main(String[] args) {
         SpringApplication.run(RocketMQOriginalApp.class, args);
     }

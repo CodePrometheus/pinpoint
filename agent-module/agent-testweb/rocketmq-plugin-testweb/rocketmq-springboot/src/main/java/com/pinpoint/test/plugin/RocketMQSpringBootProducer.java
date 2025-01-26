@@ -13,8 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 package com.pinpoint.test.plugin;
 
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import javax.annotation.Resource;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.rocketmq.client.producer.SendCallback;
@@ -23,10 +27,6 @@ import org.apache.rocketmq.spring.core.RocketMQTemplate;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.Resource;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 
 /**
  * @author messi-gao
@@ -48,19 +48,21 @@ public class RocketMQSpringBootProducer {
     @GetMapping("/template/sendAsync")
     public String templatesendAsync() {
         String topic = "TopicTest";
-        rocketMQTemplate.asyncSend(topic, MessageBuilder.withPayload("Hello, World!2222".getBytes(UTF8)).build(),
-                new SendCallback() {
-                    @Override
-                    public void onSuccess(SendResult sendResult) {
-                        logger.info("async onSucess SendResult={}", sendResult);
-                    }
+        rocketMQTemplate.asyncSend(
+            topic, MessageBuilder.withPayload("Hello, World!2222".getBytes(UTF8)).build(),
+            new SendCallback() {
+                @Override
+                public void onSuccess(SendResult sendResult) {
+                    logger.info("async onSucess SendResult={}", sendResult);
+                }
 
-                    @Override
-                    public void onException(Throwable e) {
-                        logger.info("async onException", e);
+                @Override
+                public void onException(Throwable e) {
+                    logger.info("async onException", e);
 
-                    }
-                });
+                }
+            }
+        );
         return "success";
     }
 }

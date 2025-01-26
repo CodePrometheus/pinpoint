@@ -53,7 +53,8 @@ public class UnsafeDelegatorJava8 {
             data = localCopy.handleLambdaBytecode(hostClass, data, cpPatches);
         }
 
-        return UNSAFE.defineAnonymousClass(hostClass, data, cpPatches);
+        return null;
+        // return UNSAFE.defineAnonymousClass(hostClass, data, cpPatches);
     }
 
 }

@@ -32,7 +32,7 @@ public class PinpointBanner implements Banner {
     private String buildBanner() {
         StringBuilder banner = new StringBuilder(128);
         banner.append(bannerSupplier.get());
-        banner.append(format("Pinpoint Version", BannerVersionTemplate.VERSION));
+        banner.append(format("Pinpoint Version", "3"));
         banner.append(System.lineSeparator());
 
         for (String key : dumpKeys) {

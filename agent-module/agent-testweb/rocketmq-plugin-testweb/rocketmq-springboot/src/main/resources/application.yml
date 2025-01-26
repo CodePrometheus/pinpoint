@@ -4,7 +4,7 @@ rocketmq:
     group: test-group
 
 server:
-  port: 18080
+  port: 8999
 
 logging:
   level:

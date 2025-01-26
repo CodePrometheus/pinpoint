@@ -15,6 +15,7 @@
 package com.navercorp.pinpoint.bootstrap.plugin.test;
 
 import java.lang.reflect.Member;
+import java.util.Arrays;
 import java.util.Objects;
 
 /**
@@ -188,6 +189,38 @@ public class ExpectedTrace {
             return new ExpectedTrace(this);
         }
 
+        @Override
+        public String toString() {
+            return "ExpectedTrace.Builder{" +
+                    "type=" + type +
+                    ", serviceType='" + serviceType + '\'' +
+                    ", method=" + method +
+                    ", methodSignature='" + methodSignature + '\'' +
+                    ", exception=" + exception +
+                    ", rpc=" + rpc +
+                    ", endPoint=" + endPoint +
+                    ", remoteAddr=" + remoteAddr +
+                    ", destinationId=" + destinationId +
+                    ", annotations=" + Arrays.toString(annotations) +
+                    ", asyncTraces=" + Arrays.toString(asyncTraces) +
+                    '}';
+        }
     }
 
+    @Override
+    public String toString() {
+        return "ExpectedTrace{" +
+                "type=" + type +
+                ", serviceType='" + serviceType + '\'' +
+                ", method=" + method +
+                ", methodSignature='" + methodSignature + '\'' +
+                ", exception=" + exception +
+                ", rpc=" + rpc +
+                ", endPoint=" + endPoint +
+                ", remoteAddr=" + remoteAddr +
+                ", destinationId=" + destinationId +
+                ", annotations=" + Arrays.toString(annotations) +
+                ", asyncTraces=" + Arrays.toString(asyncTraces) +
+                '}';
+    }
 }

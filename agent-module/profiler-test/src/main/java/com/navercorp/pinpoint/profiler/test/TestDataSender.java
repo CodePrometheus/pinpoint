@@ -67,6 +67,7 @@ public class TestDataSender implements DataSender<MetaDataType> {
             ApiMetaData md = (ApiMetaData)data;
 
             int apiId = md.getApiId();
+            System.out.println("apiId = " + apiId);
             String javaMethodDescriptor = toJavaMethodDescriptor(md);
 
             syncPut(this.apiIdMap, apiId, javaMethodDescriptor);
