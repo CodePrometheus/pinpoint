@@ -102,7 +102,6 @@
         <module>webhook</module>
         <module>web-frontend</module>
         <module>hbase</module>
-        <module>flink</module>
         <module>batch</module>
 
         <module>pinot</module>
@@ -147,7 +146,7 @@
         <codehaus.jackson.version>1.9.13</codehaus.jackson.version>
         <hbase2.client.version>2.5.10-hadoop3</hbase2.client.version>
 
-        <pinot.client.version>1.0.0</pinot.client.version>
+        <pinot.client.version>1.2.0</pinot.client.version>
 
         <plugin.jacoco.skip>true</plugin.jacoco.skip>
 
@@ -272,8 +271,8 @@
         <!-- frontend-plugin -->
         <plugin.frontend.version>1.13.4</plugin.frontend.version>
         <!-- https://nodejs.org/ko/download/releases/ -->
-        <plugin.frontend.node.version>v16.17.1</plugin.frontend.node.version>
-        <plugin.frontend.yarn.version>v1.22.19</plugin.frontend.yarn.version>
+        <plugin.frontend.node.version>v22.13.1</plugin.frontend.node.version>
+        <plugin.frontend.yarn.version>v1.22.22</plugin.frontend.yarn.version>
         <plugin.frontend.node.install.dir>/node_install/node-${plugin.frontend.node.version}</plugin.frontend.node.install.dir>
 
         <spring-boot-maven-plugin.attatch>false</spring-boot-maven-plugin.attatch>
@@ -586,11 +585,6 @@
                 <groupId>com.navercorp.pinpoint</groupId>
                 <artifactId>pinpoint-plugins-assembly</artifactId>
                 <type>pom</type>
-                <version>${project.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.navercorp.pinpoint</groupId>
-                <artifactId>pinpoint-flink</artifactId>
                 <version>${project.version}</version>
             </dependency>
 

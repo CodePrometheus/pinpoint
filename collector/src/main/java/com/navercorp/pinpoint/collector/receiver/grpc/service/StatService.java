@@ -19,15 +19,14 @@ package com.navercorp.pinpoint.collector.receiver.grpc.service;
 import com.google.protobuf.Empty;
 import com.google.protobuf.GeneratedMessageV3;
 import com.navercorp.pinpoint.collector.receiver.DispatchHandler;
+import com.navercorp.pinpoint.grpc.Header;
 import com.navercorp.pinpoint.grpc.MessageFormatUtils;
+import com.navercorp.pinpoint.grpc.server.ServerContext;
 import com.navercorp.pinpoint.grpc.trace.PAgentStat;
 import com.navercorp.pinpoint.grpc.trace.PAgentStatBatch;
 import com.navercorp.pinpoint.grpc.trace.PAgentUriStat;
 import com.navercorp.pinpoint.grpc.trace.PStatMessage;
 import com.navercorp.pinpoint.grpc.trace.StatGrpc;
-import com.navercorp.pinpoint.io.header.Header;
-import com.navercorp.pinpoint.io.header.HeaderEntity;
-import com.navercorp.pinpoint.io.header.v2.HeaderV2;
 import com.navercorp.pinpoint.io.request.DefaultMessage;
 import com.navercorp.pinpoint.io.request.Message;
 import com.navercorp.pinpoint.io.request.ServerRequest;
@@ -37,7 +36,6 @@ import io.grpc.stub.StreamObserver;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.util.HashMap;
 import java.util.Objects;
 import java.util.concurrent.atomic.AtomicLong;
 
@@ -89,13 +87,13 @@ public class StatService extends StatGrpc.StatImplBase {
 
 
     private <T> Message<T> newMessage(T requestData, MessageType messageType) {
-        final Header header = new HeaderV2(Header.SIGNATURE, HeaderV2.VERSION, messageType.getCode());
-        final HeaderEntity headerEntity = new HeaderEntity(new HashMap<>());
-        return new DefaultMessage<>(header, headerEntity, requestData);
+        Header header = ServerContext.getAgentInfo();
+        return new DefaultMessage<>(header, messageType, requestData);
     }
 
     private void dispatch(final Message<? extends GeneratedMessageV3> message, ServerCallStream<PStatMessage, Empty> responseObserver) {
         try {
+            @SuppressWarnings("unchecked")
             ServerRequest<GeneratedMessageV3> request = (ServerRequest<GeneratedMessageV3>) serverRequestFactory.newServerRequest(message);
             dispatchHandler.dispatchSendMessage(request);
         } catch (Throwable e) {

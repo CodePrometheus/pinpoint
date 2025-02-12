@@ -16,16 +16,17 @@
 
 package com.navercorp.pinpoint.io.request;
 
-import com.navercorp.pinpoint.io.header.Header;
-import com.navercorp.pinpoint.io.header.HeaderEntity;
+import com.navercorp.pinpoint.grpc.Header;
+import com.navercorp.pinpoint.io.util.MessageType;
 
 /**
  * @author Woonduk Kang(emeroad)
  */
 public interface Message<T> {
+
     Header getHeader();
 
-    HeaderEntity getHeaderEntity();
+    MessageType getMessageType();
 
     T getData();
 }
