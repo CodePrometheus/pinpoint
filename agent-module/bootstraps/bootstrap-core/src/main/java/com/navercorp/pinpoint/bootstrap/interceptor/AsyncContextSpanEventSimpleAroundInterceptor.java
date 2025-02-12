@@ -39,7 +39,7 @@ public abstract class AsyncContextSpanEventSimpleAroundInterceptor extends Abstr
             logger.beforeInterceptor(target, args);
         }
 
-        final AsyncContext asyncContext = getAsyncContext(target, args);
+        final AsyncContext asyncContext = getAsyncContext(target, args); // DefaultAsyncContext{asyncId=DefaultAsyncId{asyncId=1, sequence=0}, traceRoot=RemoteTraceRootImpl{traceId=DefaultTraceId{transactionId=http5-agentId^1739453074645^1, transactionUId=null, parentSpanId=-1, spanId=9088218635700154016, flags=0}, agentId='http5-agentId', localTransactionId=1, traceStartTime=1739453092222, shared=com.navercorp.pinpoint.profiler.context.id.DefaultShared@5b9d5443}, asyncState=null}
         if (asyncContext == null) {
             if (isTrace) {
                 logger.trace("AsyncContext not found");
@@ -47,7 +47,7 @@ public abstract class AsyncContextSpanEventSimpleAroundInterceptor extends Abstr
             return;
         }
 
-        final Trace trace = getAsyncTrace(asyncContext);
+        final Trace trace = getAsyncTrace(asyncContext); // AsyncDefaultTrace{asyncState=LoggingAsyncState{delegate=ListenableAsyncState{asyncStateListener=com.navercorp.pinpoint.profiler.context.SpanAsyncStateListener@ec5b7e8, setup=false, await=false, finish=false}}} DefaultTrace{traceRoot=RemoteTraceRootImpl{traceId=DefaultTraceId{transactionId=http5-agentId^1739453074645^1, transactionUId=null, parentSpanId=-1, spanId=9088218635700154016, flags=0}, agentId='http5-agentId', localTransactionId=1, traceStartTime=1739453092222, shared=com.navercorp.pinpoint.profiler.context.id.DefaultShared@5b9d5443}}
         if (trace == null) {
             return;
         }

@@ -114,7 +114,7 @@ public class DefaultTrace implements Trace {
         }
         // Set properties for the case when stackFrame is not used as part of Span.
         final SpanEvent spanEvent = newSpanEvent(stackId);
-        this.callStack.push(spanEvent);
+        this.callStack.push(spanEvent); // SpanEvent{stackId=-1, timeRecording=true, startTime=1739449715184, elapsedTime=0, asyncIdObject=null, sequence=0, serviceType=0, endPoint='null', annotations=null, depth=-1, nextSpanId=-1, destinationId='null', apiId=0, exceptionInfo=null, executeQueryType=false} 
         return spanEvent;
     }
 
@@ -137,7 +137,8 @@ public class DefaultTrace implements Trace {
             return;
         }
 
-        final SpanEvent spanEvent = callStack.pop();
+        final SpanEvent spanEvent = callStack.pop(); // SpanEvent{stackId=-1, timeRecording=true, startTime=1739453572619, elapsedTime=0, asyncIdObject=null, sequence=4, serviceType=9063, endPoint='null', annotations=null, depth=5, nextSpanId=-1, destinationId='null', apiId=16, exceptionInfo=null, executeQueryType=false} 
+        System.out.println("my|DefaultTrace|traceBlockEnd spanEvent = " + spanEvent);
         if (spanEvent == null) {
             if (logger.isWarnEnabled()) {
                 stackDump("call stack is empty.");
@@ -261,7 +262,7 @@ public class DefaultTrace implements Trace {
 
     @Override
     public SpanEventRecorder currentSpanEventRecorder() {
-        SpanEvent spanEvent = callStack.peek();
+        SpanEvent spanEvent = callStack.peek(); // SpanEvent{stackId=-1, timeRecording=true, startTime=1739453572619, elapsedTime=0, asyncIdObject=null, sequence=4, serviceType=0, endPoint='null', annotations=null, depth=5, nextSpanId=-1, destinationId='null', apiId=0, exceptionInfo=null, executeQueryType=false} 
         if (spanEvent == null) {
             if (logger.isWarnEnabled()) {
                 stackDump("call stack is empty");

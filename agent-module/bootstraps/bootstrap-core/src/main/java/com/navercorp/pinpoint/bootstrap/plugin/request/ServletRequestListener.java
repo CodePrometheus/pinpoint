@@ -103,7 +103,7 @@ public class ServletRequestListener<REQ> {
     }
 
     private Trace createTrace(REQ request) {
-        final String requestURI = requestAdaptor.getRpcName(request);
+        final String requestURI = requestAdaptor.getRpcName(request); // /asyncGet
         if (this.excludeUrlFilter.filter(requestURI)) {
             if (isTrace) {
                 logger.trace("Filter requestURI={}", requestURI);
@@ -111,7 +111,7 @@ public class ServletRequestListener<REQ> {
             return null;
         }
 
-        final String methodName = requestAdaptor.getMethodName(request);
+        final String methodName = requestAdaptor.getMethodName(request); // GET
         if (this.excludeMethodFilter.filter(methodName)) {
             if (isTrace) {
                 logger.trace("Filter methodName={}", methodName);

@@ -68,7 +68,7 @@ public final class PinpointClassLoaderFactory {
     }
 
     private static ClassLoaderFactory newClassLoaderFactory(String factoryName) {
-        ClassLoader classLoader = PinpointClassLoaderFactory.class.getClassLoader();
+        ClassLoader classLoader = PinpointClassLoaderFactory.class.getClassLoader(); // classLoader == null
 
         return new DynamicClassLoaderFactory(factoryName, classLoader);
     }

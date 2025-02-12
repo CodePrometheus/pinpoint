@@ -43,6 +43,7 @@ public class PinpointBootStrap {
 
     private static final LoadState STATE = new LoadState();
 
+    // 1.设置启动状态，避免重复初始化
     public static void premain(String agentArgs, Instrumentation instrumentation) {
 
         if (DisableOptions.isBootDisabled()) {
@@ -75,10 +76,10 @@ public class PinpointBootStrap {
     private void start() {
         logger.info("pinpoint agentArgs:" + agentArgs);
         logger.info("PinpointBootStrap.ClassLoader:" + PinpointBootStrap.class.getClassLoader());
-        logger.info("ContextClassLoader:" + Thread.currentThread().getContextClassLoader());
+        logger.info("ContextClassLoader:" + Thread.currentThread().getContextClassLoader()); // AppClassLoader
 
         final JavaAgentPathResolver javaAgentPathResolver = JavaAgentPathResolver.newJavaAgentPathResolver();
-        final Path agentPath = javaAgentPathResolver.resolveJavaAgentPath();
+        final Path agentPath = javaAgentPathResolver.resolveJavaAgentPath(); // /Users/zhouzixin/agent-framework/pinpoint/agent-module/agent/target/pinpoint-agent-3.1.0-SNAPSHOT/pinpoint-bootstrap-3.1.0-SNAPSHOT.jar
         logger.info("JavaAgentPath:" + agentPath);
         if (!Files.exists(agentPath)) {
             logger.warn("AgentPath not found path:" + agentPath);
@@ -123,7 +124,7 @@ public class PinpointBootStrap {
     private ClassLoader getParentClassLoader() {
         final ClassLoader classLoader = getPinpointBootStrapClassLoader();
         if (classLoader == Object.class.getClassLoader()) {
-            logger.info("parentClassLoader:BootStrapClassLoader:" + classLoader);
+            logger.info("parentClassLoader:BootStrapClassLoader:" + classLoader); // null
         } else {
             logger.info("parentClassLoader:" + classLoader);
         }
@@ -147,7 +148,7 @@ public class PinpointBootStrap {
     private void appendToBootstrapClassLoader(Instrumentation instrumentation, BootDir bootDir) {
         List<JarFile> jarFiles = bootDir.openJarFiles();
         for (JarFile jarFile : jarFiles) {
-            Path path = FileUtils.subpathAfterLast(Paths.get(jarFile.getName()), 2);
+            Path path = FileUtils.subpathAfterLast(Paths.get(jarFile.getName()), 2); // boot/ + jarName
             logger.info("appendToBootstrapClassLoader:" + path);
             instrumentation.appendToBootstrapClassLoaderSearch(jarFile);
         }

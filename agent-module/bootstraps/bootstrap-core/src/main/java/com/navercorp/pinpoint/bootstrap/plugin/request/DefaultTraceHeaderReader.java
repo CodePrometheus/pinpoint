@@ -45,7 +45,7 @@ public class DefaultTraceHeaderReader<T> implements TraceHeaderReader<T> {
         Objects.requireNonNull(request, "request");
 
         // Check sampling flag from client. If the flag is false, do not sample this request.
-        final boolean sampling = samplingEnable(request);
+        final boolean sampling = samplingEnable(request); // Pinpoint-Sampled
         if (!sampling) {
             return DisableTraceHeader.INSTANCE;
         }
@@ -76,7 +76,7 @@ public class DefaultTraceHeaderReader<T> implements TraceHeaderReader<T> {
     }
 
     private boolean samplingEnable(final T request) {
-        final String samplingFlag = requestAdaptor.getHeader(request, Header.HTTP_SAMPLED.toString());
+        final String samplingFlag = requestAdaptor.getHeader(request, Header.HTTP_SAMPLED.toString()); // null
         if (isDebug) {
             logger.debug("SamplingFlag={}", samplingFlag);
         }

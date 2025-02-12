@@ -174,6 +174,7 @@ public class AgentInfoSender {
             AgentInfo agentInfo = null;
             try {
                 agentInfo = agentInfoFactory.createAgentInfo();
+                System.out.println("my|AgentInfoSender|agentInfo = " + agentInfo);
 
                 logger.info("Sending AgentInfo={}", agentInfo);
                 CompletableFuture<ResultResponse> future = dataSender.request(agentInfo);

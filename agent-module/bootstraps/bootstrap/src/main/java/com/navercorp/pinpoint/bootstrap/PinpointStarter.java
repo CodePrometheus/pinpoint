@@ -97,7 +97,7 @@ class PinpointStarter {
             }
 
             AgentBootLoader agentBootLoader = new AgentBootLoader(agentType.getClassName(), agentClassLoader);
-            logger.info(String.format("pinpoint agent [%s] starting...", agentType));
+            logger.info(String.format("pinpoint agent [%s] starting...", agentType)); // pinpoint agent [AgentType{com.navercorp.pinpoint.profiler.DefaultAgent}] starting...
 
             final List<Path> pluginJars = agentDirectory.getPlugins();
             AgentOption option = createAgentOption(
@@ -108,7 +108,7 @@ class PinpointStarter {
                     pluginJars,
                     agentDirectory.getBootDir().getJarPath());
             Object agent = agentBootLoader.boot(option);
-            Class<?> agentClazz = agent.getClass();
+            Class<?> agentClazz = agent.getClass(); // class com.navercorp.pinpoint.profiler.DefaultAgent
             agentClazz.getMethod("start").invoke(agent);
             agentClazz.getMethod("registerStopHandler").invoke(agent);
             logger.info("pinpoint agent started normally.");

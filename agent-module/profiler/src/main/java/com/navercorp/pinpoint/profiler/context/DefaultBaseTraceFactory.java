@@ -174,7 +174,7 @@ public class DefaultBaseTraceFactory implements BaseTraceFactory {
     public Trace newAsyncTraceObject(String urlPath) {
         final TraceSampler.State state = traceSampler.isNewSampled(urlPath);
         if (state.isSampled()) {
-            final TraceRoot traceRoot = traceRootFactory.newTraceRoot(state.nextId());
+            final TraceRoot traceRoot = traceRootFactory.newTraceRoot(state.nextId()); // DefaultTraceId{transactionId=http5-agentId^1739449220132^1, transactionUId=null, parentSpanId=-1, spanId=-4667337224178057711, flags=0}
             return newAsyncDefaultTrace(traceRoot);
         } else {
             return newAsyncLocalTrace(state.nextId());

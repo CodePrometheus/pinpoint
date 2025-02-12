@@ -51,7 +51,7 @@ public class DefaultTraceFactory implements TraceFactory {
     @Override
     public Trace currentTraceObject() {
         final Reference<Trace> reference = threadLocalBinder.get();
-        final Trace trace = reference.get();
+        final Trace trace = reference.get(); // tomcat {stack=[SpanEvent{stackId=-1, timeRecording=true, startTime=1739450092461, elapsedTime=0, asyncIdObject=null, sequence=0, serviceType=1011, endPoint='null', annotations=null, depth=1, nextSpanId=-1, destinationId='null', apiId=8, exceptionInfo=null, executeQueryType=false} , null, null, null, null, null, null, null], index=1, factory=SpanEventFactory{}}
         if (trace == null) {
             return null;
         }

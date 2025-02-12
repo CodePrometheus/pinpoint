@@ -53,7 +53,7 @@ public class JavaAgentPathResolver {
 
     public Path resolveJavaAgentPath() {
         for (AgentPathFinder agentPath : agentPathFinders) {
-            final Path path = agentPath.getPath();
+            final Path path = agentPath.getPath(); // /Users/zhouzixin/agent-framework/pinpoint/agent-module/agent/target/pinpoint-agent-3.1.0-SNAPSHOT/pinpoint-bootstrap-3.1.0-SNAPSHOT.jar
             if (path != null) {
                 return path;
             }

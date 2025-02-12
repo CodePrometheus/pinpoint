@@ -33,6 +33,10 @@ public class AgentBootLoader {
 
     private final ContextClassLoaderExecuteTemplate<Object> executeTemplate;
 
+    /**
+     * @param bootClass {@link com.navercorp.pinpoint.profiler.DefaultAgent}
+     * @param agentClassLoader {@link com.navercorp.pinpoint.bootstrap.java9.classloader.Java9ClassLoader if java9+}
+     */
     public AgentBootLoader(String bootClass, ClassLoader agentClassLoader) {
         this.bootClass = Objects.requireNonNull(bootClass, "bootClass");
         this.classLoader = Objects.requireNonNull(agentClassLoader, "agentClassLoader");
@@ -42,7 +46,7 @@ public class AgentBootLoader {
     public Object boot(final AgentOption agentOption) {
 
         final Class<?> agentClazz = getBootStrapClass("com.navercorp.pinpoint.profiler.Agent");
-        final Class<?> bootStrapClazz = getBootStrapClass(bootClass);
+        final Class<?> bootStrapClazz = getBootStrapClass(bootClass); // class com.navercorp.pinpoint.profiler.DefaultAgent
         if (!agentClazz.isAssignableFrom(bootStrapClazz)) {
             throw new IllegalStateException("Invalid AgentClass:" + bootStrapClazz);
         }

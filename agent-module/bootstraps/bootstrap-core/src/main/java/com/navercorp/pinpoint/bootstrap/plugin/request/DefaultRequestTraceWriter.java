@@ -68,19 +68,19 @@ public class DefaultRequestTraceWriter<T> implements RequestTraceWriter<T> {
         if (isDebug) {
             logger.debug("Set request header. traceId={}, applicationName={}, serverTypeCode={}, clusterNamespace={}", traceId, applicationName, serverTypeCode, clusterNamespace);
         }
-        clientHeaderAdaptor.setHeader(header, Header.HTTP_TRACE_ID.toString(), traceId.getTransactionId());
-        clientHeaderAdaptor.setHeader(header, Header.HTTP_SPAN_ID.toString(), String.valueOf(traceId.getSpanId()));
-        clientHeaderAdaptor.setHeader(header, Header.HTTP_PARENT_SPAN_ID.toString(), String.valueOf(traceId.getParentSpanId()));
-        clientHeaderAdaptor.setHeader(header, Header.HTTP_FLAGS.toString(), String.valueOf(traceId.getFlags()));
-        clientHeaderAdaptor.setHeader(header, Header.HTTP_PARENT_APPLICATION_NAME.toString(), applicationName);
-        clientHeaderAdaptor.setHeader(header, Header.HTTP_PARENT_APPLICATION_TYPE.toString(), Short.toString(serverTypeCode));
+        clientHeaderAdaptor.setHeader(header, Header.HTTP_TRACE_ID.toString(), traceId.getTransactionId()); // http5-agentId^1739451319999^1
+        clientHeaderAdaptor.setHeader(header, Header.HTTP_SPAN_ID.toString(), String.valueOf(traceId.getSpanId())); // 2416187240697580862
+        clientHeaderAdaptor.setHeader(header, Header.HTTP_PARENT_SPAN_ID.toString(), String.valueOf(traceId.getParentSpanId())); // 6912225487037848714
+        clientHeaderAdaptor.setHeader(header, Header.HTTP_FLAGS.toString(), String.valueOf(traceId.getFlags())); // 0
+        clientHeaderAdaptor.setHeader(header, Header.HTTP_PARENT_APPLICATION_NAME.toString(), applicationName); // http5-name
+        clientHeaderAdaptor.setHeader(header, Header.HTTP_PARENT_APPLICATION_TYPE.toString(), Short.toString(serverTypeCode)); // 1000
 
         if (clusterNamespace != NOT_SET) {
             clientHeaderAdaptor.setHeader(header, Header.HTTP_PARENT_APPLICATION_NAMESPACE.toString(), clusterNamespace);
         }
 
         if (host != null) {
-            clientHeaderAdaptor.setHeader(header, Header.HTTP_HOST.toString(), host);
+            clientHeaderAdaptor.setHeader(header, Header.HTTP_HOST.toString(), host); // 127.0.0.1:19000
         }
     }
 }

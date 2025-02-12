@@ -105,6 +105,9 @@ public class StandardHostValveInvokeInterceptor implements ApiIdAwareAroundInter
         return validation.build();
     }
 
+    /**
+     (http5-debug)1. tomcat invoke(Request request, Response response) StandardHostValve
+     */
     @Override
     public void before(Object target, int apiId, Object[] args) {
         if (isDebug) {
@@ -126,7 +129,7 @@ public class StandardHostValveInvokeInterceptor implements ApiIdAwareAroundInter
                 return;
             }
             final HttpServletResponse response = (HttpServletResponse) args[1];
-            MethodDescriptor methodDescriptor = MethodDescriptorHelper.apiId(apiId);
+            MethodDescriptor methodDescriptor = MethodDescriptorHelper.apiId(apiId); // 8
             this.servletRequestListener.initialized(request, TomcatConstants.TOMCAT_METHOD, methodDescriptor);
             this.servletResponseListener.initialized(response, TomcatConstants.TOMCAT_METHOD, methodDescriptor); //must after request listener due to trace block begin
         } catch (Throwable t) {

@@ -47,6 +47,7 @@ public class UriStatCollectingJob implements Runnable, Closeable {
 
         while (true) {
             AgentUriStatData agentUriStatData = uriStatStorage.poll();
+            System.out.println("my|UriStatCollectingJob agentUriStatData = " + agentUriStatData);
             if (agentUriStatData == null) {
                 break;
             }

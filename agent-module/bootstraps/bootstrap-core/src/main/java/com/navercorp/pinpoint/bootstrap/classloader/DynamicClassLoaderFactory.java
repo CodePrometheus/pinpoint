@@ -46,7 +46,7 @@ public class DynamicClassLoaderFactory implements ClassLoaderFactory {
     @Override
     public ClassLoader createClassLoader(String name, URL[] urls, ClassLoader parent, List<String> libClass) {
         try {
-            return constructor.newInstance(name, urls, parent, libClass);
+            return constructor.newInstance(name, urls, parent, libClass); // pinpoint.agent,lib/*,null,libClass 
         } catch (ReflectiveOperationException ex) {
             throw new IllegalStateException(constructor + " invoke fail Caused by:" + ex.getMessage(), ex);
         }

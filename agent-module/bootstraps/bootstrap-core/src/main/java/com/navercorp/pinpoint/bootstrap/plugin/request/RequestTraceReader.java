@@ -59,10 +59,10 @@ public class RequestTraceReader<T> {
 
         final TraceHeader traceHeader = traceHeaderReader.read(request);
         // Check sampling flag from client. If the flag is false, do not sample this request.
-        final TraceHeaderState state = traceHeader.getState();
+        final TraceHeaderState state = traceHeader.getState(); // NEW_TRACE
         if (state == TraceHeaderState.DISABLE) {
-            // Even if this transaction is not a sampling target, we have to create Trace object to mark 'not sampling'.
-            // For example, if this transaction invokes rpc call, we can add parameter to tell remote node 'don't sample this transaction'
+            // Even if this transaction is not a sampling target, we have to create Trace object to mark 'not sampling'. 即使此事务不是采样目标，我们也必须创建Trace对象以标记“不采样”
+            // For example, if this transaction invokes rpc call, we can add parameter to tell remote node 'don't sample this transaction' 例如，如果此事务调用rpc调用，我们可以添加参数以告诉远程节点“不要对此事务进行采样”
             final Trace trace = this.traceContext.disableSampling();
             if (isDebug) {
                 logger.debug("Remote call sampling flag found. skip trace requestUrl:{}, remoteAddr:{}", requestAdaptor.getRpcName(request), requestAdaptor.getRemoteAddress(request));
@@ -84,7 +84,7 @@ public class RequestTraceReader<T> {
     }
 
     private Trace newTrace(T request) {
-        final Trace trace = newTrace(requestAdaptor.getRpcName(request));
+        final Trace trace = newTrace(requestAdaptor.getRpcName(request)); // AsyncDefaultTrace{asyncState=LoggingAsyncState{delegate=ListenableAsyncState{asyncStateListener=com.navercorp.pinpoint.profiler.context.SpanAsyncStateListener@27f23fa8, setup=false, await=false, finish=false}}} DefaultTrace{traceRoot=RemoteTraceRootImpl{traceId=DefaultTraceId{transactionId=http5-agentId^1739449220132^1, transactionUId=null, parentSpanId=-1, spanId=-4667337224178057711, flags=0}, agentId='http5-agentId', localTransactionId=1, traceStartTime=1739449397775, shared=com.navercorp.pinpoint.profiler.context.id.DefaultShared@60b64905}}
         if (trace.canSampled()) {
             if (isDebug) {
                 logger.debug("TraceID not exist. start new trace. requestUrl:{}, remoteAddr:{}", requestAdaptor.getRpcName(request), requestAdaptor.getRemoteAddress(request));

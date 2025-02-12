@@ -77,6 +77,7 @@ public class CustomMetricCollectingJob implements Runnable {
         final AgentCustomMetricSnapshotBatch agentCustomMetricSnapshotBatch = new AgentCustomMetricSnapshotBatch(agentCustomMetricSnapshotList);
 
         logger.trace("collect agentCustomMetric:{}", agentCustomMetricSnapshotBatch);
+        System.out.println("my|CustomMetricCollectingJob agentCustomMetricSnapshotBatch = " + agentCustomMetricSnapshotBatch);
         dataSender.send(agentCustomMetricSnapshotBatch);
 
         this.agentCustomMetricSnapshotList = new ArrayList<>(numCollectionsPerBatch);

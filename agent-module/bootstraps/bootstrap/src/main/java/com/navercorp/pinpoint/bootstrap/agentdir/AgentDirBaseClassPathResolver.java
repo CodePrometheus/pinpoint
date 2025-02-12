@@ -76,7 +76,7 @@ public class AgentDirBaseClassPathResolver implements ClassPathResolver {
 
         final BootDir bootDir = resolveBootDir(agentDirPath);
 
-        final Path agentLibPath = getAgentLibPath(agentDirPath);
+        final Path agentLibPath = getAgentLibPath(agentDirPath); // /Users/zhouzixin/agent-framework/pinpoint/agent-module/agent/target/pinpoint-agent-3.1.0-SNAPSHOT/lib
         final List<Path> libs = resolveLib(agentLibPath);
 
         Path agentPluginPath = getAgentPluginPath(agentDirPath);
@@ -94,11 +94,11 @@ public class AgentDirBaseClassPathResolver implements ClassPathResolver {
             throw new IllegalStateException("agentDirPath is null " + agentJarFullPath);
         }
 
-        logger.info("Agent original-path:" + agentDirPathStr);
+        logger.info("Agent original-path:" + agentDirPathStr); // /Users/zhouzixin/agent-framework/pinpoint/agent-module/agent/target/pinpoint-agent-3.1.0-SNAPSHOT
         // defense alias change
 
         Path agentDirPath = FileUtils.toRealPath(agentDirPathStr);
-        logger.info("Agent real-path:" + agentDirPath);
+        logger.info("Agent real-path:" + agentDirPath); // /Users/zhouzixin/agent-framework/pinpoint/agent-module/agent/target/pinpoint-agent-3.1.0-SNAPSHOT
         return agentDirPath;
     }
 
@@ -113,7 +113,7 @@ public class AgentDirBaseClassPathResolver implements ClassPathResolver {
     }
 
     Path findBootstrapJar(Path bootstrapJarPath) {
-        final Path fileName = bootstrapJarPath.getFileName();
+        final Path fileName = bootstrapJarPath.getFileName(); // pinpoint-bootstrap-3.1.0-SNAPSHOT.jar
         if (fileName == null) {
             return null;
         }

@@ -64,6 +64,7 @@ public class CollectJob implements Runnable {
         final long collectInterval = currentCollectionTimestamp - this.prevCollectionTimestamp;
         try {
             final AgentStatMetricSnapshot agentStat = agentStatCollector.collect();
+            System.out.println("my|CollectJob agentStat = " + agentStat);
             agentStat.setTimestamp(currentCollectionTimestamp);
             agentStat.setCollectInterval(collectInterval);
             this.agentStats.add(agentStat);

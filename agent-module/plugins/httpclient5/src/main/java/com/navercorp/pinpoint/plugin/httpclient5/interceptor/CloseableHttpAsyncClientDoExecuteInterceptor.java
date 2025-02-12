@@ -52,6 +52,10 @@ import com.navercorp.pinpoint.plugin.httpclient5.HttpRequest5ClientHeaderAdaptor
 import com.navercorp.pinpoint.plugin.httpclient5.HttpRequestGetter;
 import org.apache.hc.core5.http.HttpHost;
 import org.apache.hc.core5.http.HttpRequest;
+import org.apache.hc.core5.http.protocol.HttpContext;
+
+import java.lang.reflect.Method;
+import java.util.Arrays;
 
 public class CloseableHttpAsyncClientDoExecuteInterceptor implements AroundInterceptor {
     private final PluginLogger logger = PluginLogManager.getLogger(this.getClass());
@@ -94,7 +98,16 @@ public class CloseableHttpAsyncClientDoExecuteInterceptor implements AroundInter
             logger.beforeInterceptor(target, args);
         }
 
+        /**
+         Span{timeRecording=true, traceRoot=RemoteTraceRootImpl{traceId=DefaultTraceId{
+         transactionId=http5-agentId^1739451319999^1, transactionUId=null, 
+         parentSpanId=-1, spanId=6912225487037848714, flags=0}, agentId='http5-agentId', 
+         localTransactionId=1, traceStartTime=1739451340900, shared=com.navercorp.pinpoint.profiler.context.id.DefaultShared@4afef030},
+         startTime=1739451340900, elapsed=0, serviceType=1010, remoteAddr='0:0:0:0:0:0:0:1', annotations=null, spanEventList=null,
+         parentApplicationName='null', parentApplicationType=0, acceptorHost='null', apiId=10, exceptionInfo=null}com.navercorp.pinpoint.profiler.context.Span@5cb79446
+         */
         final Trace trace = traceContext.currentRawTraceObject();
+        System.out.println("my|http5|CloseableHttpAsyncClientDoExecuteInterceptor|before trace = " + trace);
         if (trace == null) {
             return;
         }
@@ -116,16 +129,28 @@ public class CloseableHttpAsyncClientDoExecuteInterceptor implements AroundInter
             }
 
             final SpanEventRecorder recorder = trace.traceBlockBegin();
+            System.out.println("my|http5|CloseableHttpAsyncClientDoExecuteInterceptor|before recorder = " + recorder);
             // set remote trace
-            final TraceId nextId = trace.getTraceId().getNextTraceId();
+            final TraceId nextId = trace.getTraceId().getNextTraceId(); // DefaultTraceId{transactionId=http5-agentId^1739451319999^1, transactionUId=null, parentSpanId=6912225487037848714, spanId=2416187240697580862, flags=0}
+            System.out.println("my|http5|CloseableHttpAsyncClientDoExecuteInterceptor|before nextId = " + nextId);
             recorder.recordNextSpanId(nextId.getSpanId());
-            recorder.recordServiceType(HttpClient5Constants.HTTP_CLIENT5);
+            recorder.recordServiceType(HttpClient5Constants.HTTP_CLIENT5); // 2416187240697580862
             this.requestTraceWriter.write(httpRequest, nextId, host);
             // HttpContext
-            final AsyncContextAccessor asyncContextAccessor = ArrayArgumentUtils.getArgument(args, 4, AsyncContextAccessor.class);
+            final AsyncContextAccessor asyncContextAccessor = ArrayArgumentUtils.getArgument(args, 4, AsyncContextAccessor.class); // HttpContext
+            System.out.println("my|http5|CloseableHttpAsyncClientDoExecuteInterceptor|before asyncContextAccessor = " + asyncContextAccessor);
             if (asyncContextAccessor != null) {
+                /**
+                 DefaultAsyncContext{asyncId=DefaultAsyncId{asyncId=1, sequence=0}, traceRoot=RemoteTraceRootImpl{traceId=DefaultTraceId{transactionId=http5-agentId^1739451319999^1, 
+                 transactionUId=null, parentSpanId=-1, spanId=6912225487037848714, flags=0}, agentId='http5-agentId', localTransactionId=1, 
+                 traceStartTime=1739451340900, shared=com.navercorp.pinpoint.profiler.context.id.DefaultShared@4afef030}, 
+                 asyncState=null}
+                 */
                 final AsyncContext asyncContext = recorder.recordNextAsyncContext();
+                System.out.println("my|http5|CloseableHttpAsyncClientDoExecuteInterceptor|before asyncContext = " + asyncContext);
                 asyncContextAccessor._$PINPOINT$_setAsyncContext(asyncContext);
+                Method[] declaredMethods = HttpContext.class.getDeclaredMethods();
+                System.out.println("declaredMethods = " + Arrays.toString(declaredMethods));
             }
         } catch (Throwable t) {
             logger.warn("Failed to BEFORE process. {}", t.getMessage(), t);
@@ -138,7 +163,14 @@ public class CloseableHttpAsyncClientDoExecuteInterceptor implements AroundInter
             logger.afterInterceptor(target, args);
         }
 
+        /**
+         AsyncDefaultTrace{asyncState=LoggingAsyncState{delegate=ListenableAsyncState{asyncStateListener=com.navercorp.pinpoint.profiler.context.SpanAsyncStateListener@4bfc78d7, 
+         setup=false, await=false, finish=false}}} DefaultTrace{traceRoot=RemoteTraceRootImpl{traceId=DefaultTraceId{transactionId=http5-agentId^1739367474166^1,
+         transactionUId=null, parentSpanId=-1, spanId=3165496175886451607, flags=0}, agentId='http5-agentId', localTransactionId=1, 
+         traceStartTime=1739367505443, shared=com.navercorp.pinpoint.profiler.context.id.DefaultShared@370f3da9}}
+         */
         final Trace trace = traceContext.currentTraceObject();
+        System.out.println("my|http5|CloseableHttpAsyncClientDoExecuteInterceptor|after trace = " + trace);
         if (trace == null) {
             return;
         }
@@ -150,7 +182,8 @@ public class CloseableHttpAsyncClientDoExecuteInterceptor implements AroundInter
                 return;
             }
             final String host = HostUtils.get(httpHost, httpRequest);
-            SpanEventRecorder recorder = trace.currentSpanEventRecorder();
+            SpanEventRecorder recorder = trace.currentSpanEventRecorder(); // SpanEvent{stackId=-1, timeRecording=true, startTime=1739453102498, elapsedTime=0, asyncIdObject=DefaultAsyncId{asyncId=1, sequence=0}, sequence=3, serviceType=9062, endPoint='null', annotations=null, depth=4, nextSpanId=-7985839919187174842, destinationId='null', apiId=0, exceptionInfo=null, executeQueryType=false} 
+            System.out.println("my|http5|CloseableHttpAsyncClientDoExecuteInterceptor|after recorder = " + recorder);
             // Accessing httpRequest here not BEFORE() because it can cause side effect.
             ClientRequestWrapper clientRequest = new HttpClient5RequestWrapper(httpRequest, host);
             this.clientRequestRecorder.record(recorder, clientRequest, throwable);
@@ -160,7 +193,8 @@ public class CloseableHttpAsyncClientDoExecuteInterceptor implements AroundInter
             recorder.recordException(markError, throwable);
             if (result instanceof AsyncContextAccessor) {
                 // HttpContext
-                final AsyncContext asyncContext = AsyncContextAccessorUtils.getAsyncContext(args, 4);
+                final AsyncContext asyncContext = AsyncContextAccessorUtils.getAsyncContext(args, 4); // DefaultAsyncContext{asyncId=DefaultAsyncId{asyncId=1, sequence=0}, traceRoot=RemoteTraceRootImpl{traceId=DefaultTraceId{transactionId=http5-agentId^1739453074645^1, transactionUId=null, parentSpanId=-1, spanId=9088218635700154016, flags=0}, agentId='http5-agentId', localTransactionId=1, traceStartTime=1739453092222, shared=com.navercorp.pinpoint.profiler.context.id.DefaultShared@5b9d5443}, asyncState=null}
+                System.out.println("my|http5|CloseableHttpAsyncClientDoExecuteInterceptor|after asyncContext = " + asyncContext);
                 if (asyncContext != null) {
                     ((AsyncContextAccessor) result)._$PINPOINT$_setAsyncContext(asyncContext);
                 }
