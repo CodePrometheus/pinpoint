@@ -27,9 +27,13 @@ public interface ServerRequest<T> extends AttributeMap {
     
     MessageType getMessageType();
 
+    long getRequestTime();
+
     T getData();
 
     String getRemoteAddress();
 
     int getRemotePort();
+
+    Long getTransportId();
 }

@@ -5,10 +5,13 @@ spring:
     mapper:
       default-view-inclusion: true
   profiles:
-    active: local, metric
+    active: local, metric # for debug
+  mvc:
+    problemdetails:
+      enabled: true
 
 server:
-  port: 18080
+  port: 18080 # for debug
   error:
     path: /api-public/error
     include-exception: true
@@ -30,7 +33,7 @@ pinpoint:
       enabled: true
     otlpmetric:
       enabled: true
-      
+
 pinpoint.web.websocket:
   async-send-timeout:
   max-session-idle-timeout: 10800000 # 3 hours

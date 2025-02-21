@@ -19,15 +19,15 @@ import {
   HelpPopover,
   ErrorBoundary,
 } from '..';
-import { useServerMapSearchParameters, useTabFocus } from '@pinpoint-fe/ui/hooks';
+import { useServerMapSearchParameters, useTabFocus } from '@pinpoint-fe/ui/src/hooks';
 import {
   CurrentTarget,
   serverMapCurrentTargetAtom,
   serverMapCurrentTargetDataAtom,
   serverMapDataAtom,
-} from '@pinpoint-fe/ui/atoms';
-import { APP_SETTING_KEYS, GetServerMap } from '@pinpoint-fe/ui/constants';
-import { getServerImagePath } from '@pinpoint-fe/ui/utils';
+} from '@pinpoint-fe/ui/src/atoms';
+import { APP_SETTING_KEYS, GetServerMap } from '@pinpoint-fe/ui/src/constants';
+import { getServerImagePath } from '@pinpoint-fe/ui/src/utils';
 
 export interface RealtimeProps {}
 
@@ -99,12 +99,6 @@ export const Realtime = () => {
           >
             <ResizablePanel>{isFocus && <ServerMap shouldPoll={true} />}</ResizablePanel>
             <ResizableHandle withHandle className="!h-1" />
-            <div className="px-4 bg-secondary h-9">
-              <div className="flex items-center h-full gap-1 font-semibold">
-                Active Request
-                <HelpPopover helpKey="HELP_VIEWER.REAL_TIME" />
-              </div>
-            </div>
             <ResizablePanel className="!overflow-auto">
               {isFocus && (
                 <ErrorBoundary>

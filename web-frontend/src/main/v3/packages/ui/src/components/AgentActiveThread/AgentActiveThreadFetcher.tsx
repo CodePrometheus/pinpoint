@@ -1,8 +1,11 @@
 import React from 'react';
-import { AgentActiveThread, GetServerMap } from '@pinpoint-fe/ui/constants';
+import { AgentActiveThread, GetServerMap } from '@pinpoint-fe/ui/src/constants';
 import { AgentActiveThreadView } from './AgentActiveThreadView';
 import { useAtomValue } from 'jotai';
-import { serverMapCurrentTargetAtom, serverMapCurrentTargetDataAtom } from '@pinpoint-fe/ui/atoms';
+import {
+  serverMapCurrentTargetAtom,
+  serverMapCurrentTargetDataAtom,
+} from '@pinpoint-fe/ui/src/atoms';
 import { AgentActiveThreadSkeleton } from './AgentActiveThreadSkeleton';
 import {
   Tooltip,
@@ -15,6 +18,7 @@ import { RxDrawingPinFilled, RxDrawingPin } from 'react-icons/rx';
 import { format } from 'date-fns';
 import { BsGearFill } from 'react-icons/bs';
 import { AgentActiveSetting, AgentActiveSettingType, DefaultValue } from './AgentActiveSetting';
+import { HelpPopover } from '@pinpoint-fe/ui/src/components/HelpPopover';
 
 export interface ActiveRequestProps {}
 
@@ -135,7 +139,10 @@ export const AgentActiveThreadFetcher = () => {
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
-              <div className="w-full truncate">{applicationName}</div>
+              <div className="flex flex-row w-full gap-1 truncate">
+                {applicationNameRef.current}
+                <HelpPopover helpKey="HELP_VIEWER.REAL_TIME" />
+              </div>
               <div className="flex items-center gap-1 font-normal text-gray-400">
                 <span className="text-sm">
                   {format(activeThreadCounts?.result?.timeStamp || 0, 'yyyy.MM.dd HH:mm:ss')}
@@ -148,7 +155,7 @@ export const AgentActiveThreadFetcher = () => {
             </div>
             <div className="flex flex-grow w-full h-[-webkit-fill-available] overflow-hidden">
               <AgentActiveThreadView
-                applicationName={applicationName}
+                applicationName={applicationNameRef.current}
                 activeThreadCounts={activeThreadCounts?.result}
                 setting={setting}
               />

@@ -1,6 +1,10 @@
 import { useTranslation } from 'react-i18next';
-import { colors, ErrorDetailResponse, OtlpMetricDefUserDefined } from '@pinpoint-fe/ui/constants';
-import { useOpenTelemetrySearchParameters, usePostOtlpMetricData } from '@pinpoint-fe/ui/hooks';
+import {
+  colors,
+  ErrorDetailResponse,
+  OtlpMetricDefUserDefined,
+} from '@pinpoint-fe/ui/src/constants';
+import { useOpenTelemetrySearchParameters, usePostOtlpMetricData } from '@pinpoint-fe/ui/src/hooks';
 import React from 'react';
 import { assign } from 'lodash';
 import { ReChart } from '../../../components/ReChart';
@@ -101,14 +105,12 @@ export const OpenTelemetryMetricFetcher = ({
     );
   }
 
-  const message = 'test message\ntestmesage~~~';
-
   return (
     <Widget
       title={
         <div className="flex flex-row gap-1">
           {metricDefinition.title}
-          {message && (
+          {data?.message && (
             <TooltipProvider delayDuration={0}>
               <Tooltip>
                 <TooltipTrigger asChild>
@@ -118,7 +120,7 @@ export const OpenTelemetryMetricFetcher = ({
                 </TooltipTrigger>
                 <TooltipPrimitive.Portal>
                   <TooltipContent>
-                    {message?.split('\n').map((m, i) => <p key={i}>{m}</p>)}
+                    {data?.message?.split('\n').map((m, i) => <p key={i}>{m}</p>)}
                   </TooltipContent>
                 </TooltipPrimitive.Portal>
               </Tooltip>

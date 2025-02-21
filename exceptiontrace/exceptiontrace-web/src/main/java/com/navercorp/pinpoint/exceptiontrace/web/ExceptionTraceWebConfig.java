@@ -17,8 +17,11 @@
 package com.navercorp.pinpoint.exceptiontrace.web;
 
 import com.navercorp.pinpoint.exceptiontrace.web.config.ExceptionTracePinotDaoConfiguration;
+import com.navercorp.pinpoint.exceptiontrace.web.config.ExceptionTraceProperties;
+import com.navercorp.pinpoint.exceptiontrace.web.frontend.export.ExceptionTracePropertiesExporter;
 import com.navercorp.pinpoint.pinot.config.PinotConfiguration;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -42,4 +45,14 @@ import org.springframework.context.annotation.Import;
 })
 @ConditionalOnProperty(name = "pinpoint.modules.web.exceptiontrace.enabled", havingValue = "true")
 public class ExceptionTraceWebConfig {
+
+    @Bean
+    public ExceptionTraceProperties exceptionTraceProperties() {
+        return new ExceptionTraceProperties();
+    }
+
+    @Bean
+    public ExceptionTracePropertiesExporter exceptionTracePropertiesExporter(ExceptionTraceProperties exceptionTraceProperties) {
+        return new ExceptionTracePropertiesExporter(exceptionTraceProperties);
+    }
 }

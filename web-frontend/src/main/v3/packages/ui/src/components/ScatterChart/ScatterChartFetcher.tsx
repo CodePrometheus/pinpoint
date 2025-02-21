@@ -1,14 +1,14 @@
 import React from 'react';
-import { SCATTER_DATA_TOTAL_KEY, BASE_PATH } from '@pinpoint-fe/ui/constants';
-import { CurrentTarget } from '@pinpoint-fe/ui/atoms';
+import { SCATTER_DATA_TOTAL_KEY, BASE_PATH } from '@pinpoint-fe/ui/src/constants';
+import { CurrentTarget } from '@pinpoint-fe/ui/src/atoms';
 import {
   convertParamsToQueryString,
   getScatterFullScreenPath,
   getTransactionListPath,
   getTranscationListQueryString,
-} from '@pinpoint-fe/ui/utils';
-import { useGetScatterData, useServerMapSearchParameters } from '@pinpoint-fe/ui/hooks';
-import { scatterDataAtom } from '@pinpoint-fe/ui/atoms';
+} from '@pinpoint-fe/ui/src/utils';
+import { useGetScatterData, useServerMapSearchParameters } from '@pinpoint-fe/ui/src/hooks';
+import { scatterDataAtom } from '@pinpoint-fe/ui/src/atoms';
 import { useAtom } from 'jotai';
 import { ScatterChartCore, ScatterChartCoreProps, ScatterChartHandle } from './core';
 import { useStoragedAxisY } from './core/useStoragedAxisY';
@@ -32,7 +32,7 @@ export const ScatterChartFetcher = ({
   const [x, setX] = React.useState<[number, number]>([from, to]);
   const [y, setY] = useStoragedAxisY();
   const isScatterMounted = scatterRef.current?.isMounted();
-  const { data, isLoading, setQueryParams } = useGetScatterData(node);
+  const { data, isLoading, setQueryParams } = useGetScatterData(node, dateRange);
   const [scatterData, setScatterData] = useAtom(scatterDataAtom);
 
   React.useEffect(() => {

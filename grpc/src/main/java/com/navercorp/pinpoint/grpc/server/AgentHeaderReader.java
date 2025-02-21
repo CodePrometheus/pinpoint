@@ -55,7 +55,10 @@ public class AgentHeaderReader implements HeaderReader<Header> {
     @Override
     public Header extract(Metadata headers) {
         final String agentId = getId(headers, Header.AGENT_ID_KEY);
-        final String agentName = getAgentName(headers, Header.AGENT_NAME_KEY);
+        String agentName = getAgentName(headers, Header.AGENT_NAME_KEY);
+        if (StringUtils.isEmpty(agentName)) {
+            agentName = agentId;
+        }
         final String applicationName = getId(headers, Header.APPLICATION_NAME_KEY);
         final long startTime = getTime(headers, Header.AGENT_START_TIME_KEY);
         final int serviceType = getServiceType(headers);
@@ -63,7 +66,8 @@ public class AgentHeaderReader implements HeaderReader<Header> {
         final List<Integer> supportCommandCodeList = getSupportCommandCodeList(headers);
         final boolean grpcBuiltInRetry = getGrpcBuiltInRetry(headers);
         final Map<String, Object> properties = metadataConverter.apply(headers);
-        return new Header(name, agentId, agentName, applicationName, serviceType, startTime, socketId, supportCommandCodeList, grpcBuiltInRetry, properties);
+        return new Header(name, agentId, agentName, applicationName, serviceType, startTime, socketId,
+                supportCommandCodeList, grpcBuiltInRetry, properties);
     }
 
     public static Map<String, Object> emptyProperties(Metadata headers) {

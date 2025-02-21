@@ -17,6 +17,10 @@
 package com.navercorp.pinpoint.collector.grpc.config;
 
 import com.google.protobuf.GeneratedMessageV3;
+import com.navercorp.pinpoint.collector.grpc.lifecycle.DefaultPingEventHandler;
+import com.navercorp.pinpoint.collector.grpc.lifecycle.DefaultPingSessionRegistry;
+import com.navercorp.pinpoint.collector.grpc.lifecycle.PingEventHandler;
+import com.navercorp.pinpoint.collector.grpc.lifecycle.PingSessionRegistry;
 import com.navercorp.pinpoint.collector.handler.RequestResponseHandler;
 import com.navercorp.pinpoint.collector.handler.SimpleAndRequestResponseHandler;
 import com.navercorp.pinpoint.collector.manage.HandlerManager;
@@ -33,15 +37,9 @@ import com.navercorp.pinpoint.collector.receiver.grpc.service.AgentService;
 import com.navercorp.pinpoint.collector.receiver.grpc.service.KeepAliveService;
 import com.navercorp.pinpoint.collector.receiver.grpc.service.MetadataService;
 import com.navercorp.pinpoint.collector.receiver.grpc.service.ServerRequestFactory;
-import com.navercorp.pinpoint.collector.service.AgentInfoService;
 import com.navercorp.pinpoint.collector.service.async.AgentEventAsyncTaskService;
 import com.navercorp.pinpoint.collector.service.async.AgentLifeCycleAsyncTaskService;
-import com.navercorp.pinpoint.common.server.util.AcceptedTimeService;
 import com.navercorp.pinpoint.common.server.util.IgnoreAddressFilter;
-import com.navercorp.pinpoint.grpc.server.lifecycle.DefaultPingEventHandler;
-import com.navercorp.pinpoint.grpc.server.lifecycle.DefaultPingSessionRegistry;
-import com.navercorp.pinpoint.grpc.server.lifecycle.PingEventHandler;
-import com.navercorp.pinpoint.grpc.server.lifecycle.PingSessionRegistry;
 import io.grpc.BindableService;
 import io.grpc.ServerInterceptor;
 import io.grpc.ServerServiceDefinition;
@@ -148,12 +146,10 @@ public class GrpcAgentConfiguration {
     @Bean
     public FactoryBean<DispatchHandler<GeneratedMessageV3, GeneratedMessageV3>> grpcDispatchHandlerFactoryBean(
             AgentDispatchHandler<GeneratedMessageV3, GeneratedMessageV3> dispatchHandler,
-            HandlerManager handlerManager,
-            AcceptedTimeService acceptedTimeService) {
+            HandlerManager handlerManager) {
         DispatchHandlerFactoryBean<GeneratedMessageV3, GeneratedMessageV3> bean = new DispatchHandlerFactoryBean<>();
         bean.setDispatchHandler(dispatchHandler);
         bean.setHandlerManager(handlerManager);
-        bean.setAcceptedTimeService(acceptedTimeService);
         return bean;
     }
 
@@ -176,9 +172,8 @@ public class GrpcAgentConfiguration {
 
     @Bean
     public AgentLifecycleListener lifecycleListener(KeepAliveService lifecycleService,
-                                                    AgentInfoService agentInfoService,
                                                     ShutdownEventListener shutdownEventListener) {
-        return new AgentLifecycleListener(lifecycleService, agentInfoService, shutdownEventListener);
+        return new AgentLifecycleListener(lifecycleService, shutdownEventListener);
     }
 
     @Bean
