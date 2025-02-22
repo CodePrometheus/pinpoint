@@ -78,7 +78,7 @@ public class GrpcLogReceiverPropertiesConfig {
 
     @Bean
     public GrpcLogReceiverProperties grpcLogReceiverConfig(Environment environment) {
-        boolean enable = environment.getProperty("collector.receiver.grpc.log.enable", boolean.class, false);
+        boolean enable = environment.getProperty("collector.receiver.grpc.log.enable", boolean.class, true); // set true for debug.
 
         final ServerOption serverOption = newServerOption().build();
         final BindAddress bindAddress = newBindAddressBuilder().build();

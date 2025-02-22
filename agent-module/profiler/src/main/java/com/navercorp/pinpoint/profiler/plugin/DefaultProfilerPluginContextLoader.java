@@ -76,7 +76,7 @@ public class DefaultProfilerPluginContextLoader implements ProfilerPluginContext
             List<PluginSetupResult> setupResults = setupPlugin(globalContext, jarPlugin);
             pluginsSetupResult.addPluginSetupResults(setupResults);
         }
-        ServiceType detectedApplicationType = globalContext.getApplicationType();
+        ServiceType detectedApplicationType = globalContext.getApplicationType(); 
         pluginsSetupResult.setApplicationType(detectedApplicationType);
 
         return pluginsSetupResult;
@@ -92,11 +92,12 @@ public class DefaultProfilerPluginContextLoader implements ProfilerPluginContext
 
         List<PluginSetupResult> result = new ArrayList<>();
         for (ProfilerPlugin profilerPlugin : filterProfilerPlugin) {
-            if (logger.isInfoEnabled()) {
-                logger.info("{} Plugin {}:{}", profilerPlugin.getClass(), PluginJar.PINPOINT_PLUGIN_PACKAGE, pluginPackageList);
-                logger.info("{} Requirements {}:{}", profilerPlugin.getClass(), PluginJar.PINPOINT_PLUGIN_PACKAGE_CLASS_REQUIREMENTS, pluginPackageRequirementList);
-                logger.info("Loading plugin:{} pluginPackage:{}", profilerPlugin.getClass().getName(), profilerPlugin);
-            }
+            // if (logger.isInfoEnabled()) {
+            logger.warn("{} Plugin {}:{}, ClassLoad:{}, Super ClassLoad:{}", profilerPlugin.getClass(), PluginJar.PINPOINT_PLUGIN_PACKAGE, pluginPackageList,
+                    profilerPlugin.getClass().getClassLoader(), profilerPlugin.getClass().getClassLoader().getParent());
+            logger.warn("{} Requirements {}:{}", profilerPlugin.getClass(), PluginJar.PINPOINT_PLUGIN_PACKAGE_CLASS_REQUIREMENTS, pluginPackageRequirementList);
+            logger.warn("Loading plugin:{} pluginPackage:{}", profilerPlugin.getClass().getName(), profilerPlugin);
+            // }
 
             PluginConfig pluginConfig = new PluginConfig(plugin, pluginFilterChain, pluginPackageRequirementFilter);
             final ClassInjector classInjector = classInjectorFactory.newClassInjector(pluginConfig);

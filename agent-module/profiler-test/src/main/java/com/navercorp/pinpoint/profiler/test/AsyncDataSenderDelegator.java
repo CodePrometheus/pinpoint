@@ -31,6 +31,7 @@ public class AsyncDataSenderDelegator implements AsyncDataSender<MetaDataType, R
 
     @Override
     public boolean send(MetaDataType data) {
+        System.out.println("my|AsyncDataSenderDelegator|send MetaDataType = " + data);
         return this.dataSender.send(data);
     }
 

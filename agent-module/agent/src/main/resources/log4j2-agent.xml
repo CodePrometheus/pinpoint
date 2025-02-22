@@ -21,7 +21,7 @@
             </SystemPropertyArbiter>
             <SystemPropertyArbiter propertyName="pinpoint.profiler.profiles.active" propertyValue="release">
                 <Property name="default-rollover-strategy-max">10</Property>
-                <Property name="logger-level">INFO</Property>
+                <Property name="logger-level">DEBUG</Property>
             </SystemPropertyArbiter>
 
             <DefaultArbiter>

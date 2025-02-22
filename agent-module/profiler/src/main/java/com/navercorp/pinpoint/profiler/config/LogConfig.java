@@ -26,7 +26,7 @@ public class LogConfig {
     }
 
     public void saveLogFilePath(Properties systemProperty) {
-        final String path = logsPath.toString();
+        final String path = logsPath.toString(); // .../agent-framework/pinpoint/agent-module/agent/target/pinpoint-agent-3.1.0-SNAPSHOT/logs
         // export for log4j2.xml
         systemProperty.setProperty("pinpoint.log", path);
     }

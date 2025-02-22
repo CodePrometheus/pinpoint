@@ -51,6 +51,7 @@ public class TraceLogDelegateStorage implements Storage {
             final Thread th = Thread.currentThread();
             logger.trace("[DefaultTrace] Write {} thread{id={}, name={}}", span, th.getId(), th.getName());
         }
+        System.out.println("my|TraceLogDelegateStorage|this.delegate.store span = " + span);
         this.delegate.store(span);
     }
 

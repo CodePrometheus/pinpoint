@@ -93,12 +93,12 @@
     </Appenders>
 
     <Loggers>
-        <Logger name="com.navercorp.pinpoint" level="${logger_level}" additivity="false">
+        <Logger name="com.navercorp.pinpoint" level="DEBUG" additivity="false">
             <AppenderRef ref="console"/>
             <AppenderRef ref="rollingFile"/>
         </Logger>
 
-        <Logger name="com.navercorp.pinpoint.collector.handler" level="INFO" additivity="false">
+        <Logger name="com.navercorp.pinpoint.collector.handler" level="DEBUG" additivity="false">
             <AppenderRef ref="console"/>
             <Appenderref ref="rollingFile"/>
         </Logger>
@@ -137,13 +137,13 @@
             <Appenderref ref="rollingFile"/>
         </Logger>
 
-        <Logger name="com.navercorp.pinpoint.collector.StateReport" level="INFO" additivity="false">
+        <Logger name="com.navercorp.pinpoint.collector.StateReport" level="DEBUG" additivity="false">
             <!-- disable : warn -->
             <AppenderRef  ref="stat-appender"/>
             <!--<Appender-ref ref="console"/>-->
         </Logger>
 
-        <Root level="INFO">
+        <Root level="DEBUG">
             <AppenderRef ref="console"/>
             <AppenderRef ref="rollingFile"/>
         </Root>

@@ -69,6 +69,7 @@ public class DefaultAgent implements Agent {
     private volatile AgentStatus agentStatus;
 
 
+    /**@param map see {@link com.navercorp.pinpoint.bootstrap.AgentBootLoader#boot}*/
     public DefaultAgent(Map<String, Object> map) {
         Objects.requireNonNull(map, "map");
 
@@ -77,8 +78,8 @@ public class DefaultAgent implements Agent {
         Properties properties = agentOption.getProperties();
         this.profilerConfig = ProfilerConfigLoader.load(properties);
 
-        final Path agentPath = agentOption.getAgentPath();
-        final Path logConfigPath = getLogConfigPath(profilerConfig, agentPath);
+        final Path agentPath = agentOption.getAgentPath(); // .../pinpoint/agent-module/agent/target/pinpoint-agent-3.1.0-SNAPSHOT
+        final Path logConfigPath = getLogConfigPath(profilerConfig, agentPath); // DefaultProfilerConfig
 
         LogConfig logConfig = new LogConfig(logConfigPath);
         logConfig.saveLogFilePath();
@@ -127,6 +128,8 @@ public class DefaultAgent implements Agent {
             throw new RuntimeException("applicationName is null");
         }
 
+        /**这里 build 完之后供 {@link DefaultApplicationContext#DefaultApplicationContext(AgentContextOption, ModuleFactory)} 
+         * 这里使用*/
         return AgentContextOptionBuilder.build(agentOption,
                 agentId, agentName, applicationName,
                 profilerConfig);
@@ -154,7 +157,7 @@ public class DefaultAgent implements Agent {
         logger.warn("- agentId: {}", agentOption.getAgentId());
         logger.warn("- agentName: {}", agentOption.getAgentName());
         logger.warn("- applicationName: {}", agentOption.getApplicationName());
-        logger.info("- instrumentation: {}", agentOption.getInstrumentation());
+        logger.warn("- instrumentation: {}", agentOption.getInstrumentation());
     }
 
     private LoggingSystem newLoggingSystem(Path agentPath) {

@@ -54,6 +54,7 @@ public abstract class GrpcDataSender<T> extends AbstractGrpcDataSender<T> {
 
     @Override
     public boolean send(final T data) {
+        System.out.println("my|GrpcDataSender|send queue.offer = " + data);
         if (this.queue.offer(data)) {
             return true;
         }

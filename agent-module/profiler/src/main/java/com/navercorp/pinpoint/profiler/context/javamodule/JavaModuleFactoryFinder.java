@@ -33,7 +33,7 @@ public final class JavaModuleFactoryFinder {
     public static JavaModuleFactory lookup(Instrumentation instrumentation) {
         Objects.requireNonNull(instrumentation, "instrumentation");
 
-        final Class<JavaModuleFactory> javaModuleFactory = getJavaModuleFactory();
+        final Class<JavaModuleFactory> javaModuleFactory = getJavaModuleFactory(); /**{@link com.navercorp.pinpoint.bootstrap.java9.module.DefaultJavaModuleFactory}*/
         try {
             Constructor<JavaModuleFactory> constructor = javaModuleFactory.getDeclaredConstructor(Instrumentation.class);
             return constructor.newInstance(instrumentation);

@@ -50,6 +50,7 @@ public class DefaultApiMetaDataService implements ApiMetaDataService {
                     methodDescriptor.getLineNumber(),
                     methodDescriptor.getType());
 
+            System.out.println("my|DefaultApiMetaDataService|cacheApi apiMetadata = " + apiMetadata);
             this.dataSender.send(apiMetadata);
         }
 

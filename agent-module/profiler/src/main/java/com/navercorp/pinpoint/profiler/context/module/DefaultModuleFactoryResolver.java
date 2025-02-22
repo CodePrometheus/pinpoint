@@ -60,13 +60,14 @@ public class DefaultModuleFactoryResolver implements ModuleFactoryResolver {
 
     @Override
     public ModuleFactory resolve() {
-        logger.info("{} ModuleFactory lookup", moduleFactoryClazzName);
+        logger.warn("{} ModuleFactory lookup", moduleFactoryClazzName);
         if (isDefaultModuleFactory(moduleFactoryClazzName)) {
             return new ApplicationContextModuleFactory();
         }
 
         ClassLoader classLoader = getClassLoader(DefaultModuleFactoryResolver.class.getClassLoader());
         try {
+            /**{@link ApplicationContextModuleFactory}*/
             final Class<? extends ModuleFactory> moduleFactoryClass =
                     (Class<? extends ModuleFactory>) Class.forName(moduleFactoryClazzName, true, classLoader);
             Constructor<? extends ModuleFactory> constructor = moduleFactoryClass.getConstructor();

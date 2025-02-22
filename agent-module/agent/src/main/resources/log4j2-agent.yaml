@@ -36,7 +36,7 @@ Configuration:
             - name: "default-rollover-strategy-max"
               value: "10"
             - name: "logger-level"
-              value: "INFO"
+              value: "DEBUG"
       - DefaultArbiter:
           Property:
             - name: "default-rollover-strategy-max"
@@ -152,7 +152,7 @@ Configuration:
           - ref: rollingFile
 
     Root:
-      level: INFO
+      level: DEBUG
       AppenderRef:
         - ref: console
         - ref: rollingFile

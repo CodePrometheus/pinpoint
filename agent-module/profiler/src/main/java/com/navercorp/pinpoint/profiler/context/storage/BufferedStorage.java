@@ -53,6 +53,7 @@ public class BufferedStorage implements Storage {
 
     @Override
     public void store(SpanEvent spanEvent) {
+        System.out.println("my|BufferedStorage|store spanEvent = " + spanEvent);
         this.buffer.put(spanEvent);
 
         if (this.buffer.isOverflow()) {
@@ -71,6 +72,7 @@ public class BufferedStorage implements Storage {
         if (isDebug) {
             logger.debug("Flush {}", span);
         }
+        System.out.println("my|BufferedStorage|store this.dataSender.send = " + span);
         final boolean success = this.dataSender.send(span);
         if (!success) {
             // WARN : Do not call span.toString ()

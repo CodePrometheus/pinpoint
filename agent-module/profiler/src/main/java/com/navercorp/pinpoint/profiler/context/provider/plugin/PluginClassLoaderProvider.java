@@ -37,6 +37,7 @@ public class PluginClassLoaderProvider implements Provider<ClassLoader> {
     public PluginClassLoaderProvider(@PluginJars List<PluginJar> pluginJars) {
         // TODO configuration support
         ClassLoader parentClassLoader = Object.class.getClassLoader();
+        System.out.println("my|PluginClassLoaderProvider|parentClassLoader = " + parentClassLoader); // null
         List<URL> pluginUrls = new ArrayList<>(pluginJars.size());
         for (PluginJar pluginJar : pluginJars) {
             pluginUrls.add(pluginJar.getURL());

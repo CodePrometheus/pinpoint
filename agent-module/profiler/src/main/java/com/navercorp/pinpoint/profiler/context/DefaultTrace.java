@@ -163,6 +163,7 @@ public class DefaultTrace implements Trace {
         if (spanEvent.isTimeRecording()) {
             spanEvent.markAfterTime();
         }
+        System.out.println("my|DefaultTrace|traceBlockEnd|logSpan spanEvent = " + spanEvent);
         logSpan(spanEvent);
         // state restore
         final SpanEvent previous = callStack.peek();

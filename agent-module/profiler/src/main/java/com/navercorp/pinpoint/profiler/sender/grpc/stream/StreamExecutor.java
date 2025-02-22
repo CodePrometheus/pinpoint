@@ -20,7 +20,7 @@ public class StreamExecutor<ReqT> {
 
 
     public Future<?> execute(final Runnable runnable) {
-        logger.info("stream execute {}", runnable);
+        logger.warn("stream execute {}", runnable);
         try {
             return executor.submit(runnable);
         } catch (RejectedExecutionException reject) {

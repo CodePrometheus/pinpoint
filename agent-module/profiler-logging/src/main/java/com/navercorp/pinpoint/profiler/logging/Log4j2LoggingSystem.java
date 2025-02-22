@@ -61,7 +61,7 @@ public class Log4j2LoggingSystem implements LoggingSystem {
         this.loggerContext = getLoggerContext();
 
         Logger logger = getLoggerContextLogger();
-        logger.info("{} start logPath:{}", this.getClass().getSimpleName(), configLocation);
+        logger.info("{} start logPath:{}", this.getClass().getSimpleName(), configLocation); // pinpoint/agent-module/agent/target/pinpoint-agent-3.1.0-SNAPSHOT/log4j2-agent.yaml
 
         logger.info("LoggerContextFactory:{} LoggerContext:{}", LogManager.getFactory().getClass().getName(), loggerContext.getClass().getName());
 
@@ -76,7 +76,8 @@ public class Log4j2LoggingSystem implements LoggingSystem {
         final Logger logger = loggerContext.getLogger(this.getClass().getName());
 
         String key = "pinpoint.profiler.grpc.log.enable";
-        final boolean enableGrpcLog = Boolean.parseBoolean(System.getProperty(key));
+        boolean enableGrpcLog = Boolean.parseBoolean(System.getProperty(key));
+        enableGrpcLog = true; // set this for debug
         logger.info("{}:{}", key, enableGrpcLog);
         if (!enableGrpcLog) {
             return;

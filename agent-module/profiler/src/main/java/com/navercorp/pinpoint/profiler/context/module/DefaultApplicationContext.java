@@ -154,7 +154,7 @@ public class DefaultApplicationContext implements ApplicationContext {
         try {
             Class<ClassFileTransformer> cftClass = (Class<ClassFileTransformer>) forName(moduleWrap, DefaultApplicationContext.class.getClassLoader());
             Constructor<ClassFileTransformer> constructor = cftClass.getDeclaredConstructor(ClassFileTransformModuleAdaptor.class);
-            return constructor.newInstance(classFileTransformer);
+            return constructor.newInstance(classFileTransformer); /**{@link com.navercorp.pinpoint.bootstrap.java9.module.ClassFileTransformerModuleWrap}*/
         } catch (Exception e) {
             throw new IllegalStateException(moduleWrap + " load fail Caused by:" + e.getMessage(), e);
         }
